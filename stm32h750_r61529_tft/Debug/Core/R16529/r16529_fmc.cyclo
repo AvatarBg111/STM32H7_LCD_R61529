@@ -1,0 +1,15 @@
+../Core/R16529/r16529_fmc.c:13:6:Lcd_Write_Reg	1
+../Core/R16529/r16529_fmc.c:17:6:Lcd_Write_Data	1
+../Core/R16529/r16529_fmc.c:21:6:ili9481_SetAddrWindow	1
+../Core/R16529/r16529_fmc.c:43:6:Init_Disp	1
+../Core/R16529/r16529_fmc.c:299:6:ili9481_SetRotation	5
+../Core/R16529/r16529_fmc.c:332:6:TFT_FillColor	3
+../Core/R16529/r16529_fmc.c:346:6:TFT_FillRect	3
+../Core/R16529/r16529_fmc.c:360:6:ili9481_Flood	4
+../Core/R16529/r16529_fmc.c:387:6:ili9481_FillScreen	1
+../Core/R16529/r16529_fmc.c:396:6:ili9481_FillRect	3
+../Core/R16529/r16529_fmc.c:404:6:ili9481_DrawPixel	5
+../Core/R16529/r16529_fmc.c:414:6:ili9481_DrawLine	8
+../Core/R16529/r16529_fmc.c:448:6:ili9481_DrawRect	1
+../Core/R16529/r16529_fmc.c:455:6:ili9481_DrawCircle	3
+../Core/R16529/r16529_fmc.c:555:7:Draw_Image	2

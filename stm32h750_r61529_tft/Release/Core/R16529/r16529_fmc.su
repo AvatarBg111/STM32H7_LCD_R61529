@@ -1,0 +1,16 @@
+../Core/R16529/r16529_fmc.c:35:15:Lcd_Write	16	static
+../Core/R16529/r16529_fmc.c:116:15:Lcd_Write_Reg	0	static
+../Core/R16529/r16529_fmc.c:120:15:Lcd_Write_Data	0	static
+../Core/R16529/r16529_fmc.c:134:6:ili9481_SetAddrWindow2	24	static
+../Core/R16529/r16529_fmc.c:148:6:ili9481_SetAddrWindow	40	static
+../Core/R16529/r16529_fmc.c:161:6:Init_Disp	8	static
+../Core/R16529/r16529_fmc.c:379:6:Init_Disp2	240	static
+../Core/R16529/r16529_fmc.c:487:6:init_ili9481	8	static
+../Core/R16529/r16529_fmc.c:613:6:ili9481_Flood	160	static
+../Core/R16529/r16529_fmc.c:654:6:ili9481_FillScreen	16	static
+../Core/R16529/r16529_fmc.c:660:6:ili9481_FillRect	24	static
+../Core/R16529/r16529_fmc.c:669:6:ili9481_DrawPixel	16	static
+../Core/R16529/r16529_fmc.c:679:6:ili9481_DrawLine	48	static
+../Core/R16529/r16529_fmc.c:713:6:ili9481_DrawRect	32	static
+../Core/R16529/r16529_fmc.c:721:6:ili9481_DrawCircle	48	static
+../Core/R16529/r16529_fmc.c:753:7:Draw_Image	16	static

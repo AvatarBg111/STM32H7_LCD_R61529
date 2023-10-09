@@ -1,0 +1,14 @@
+../Core/R16529/r61529.c:34:15:Lcd_Write	16	static
+../Core/R16529/r61529.c:115:15:Lcd_Write_Reg	0	static
+../Core/R16529/r61529.c:119:15:Lcd_Write_Data	0	static
+../Core/R16529/r61529.c:125:6:ili9481_SetAddrWindow	24	static
+../Core/R16529/r61529.c:141:6:Init_Disp	8	static
+../Core/R16529/r61529.c:412:6:ili9481_Flood	24	static
+../Core/R16529/r61529.c:443:6:ili9481_FillScreen	16	static
+../Core/R16529/r61529.c:449:6:ili9481_FillRect	24	static
+../Core/R16529/r61529.c:458:6:ili9481_DrawPixel	8	static
+../Core/R16529/r61529.c:468:6:ili9481_DrawLine	48	static
+../Core/R16529/r61529.c:502:6:ili9481_DrawRect	32	static
+../Core/R16529/r61529.c:510:6:ili9481_DrawCircle	48	static
+../Core/R16529/r61529.c:560:6:r61529_WriteString	64	static
+../Core/R16529/r61529.c:583:6:Draw_Image	16	static

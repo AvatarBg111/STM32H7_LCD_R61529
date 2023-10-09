@@ -1,0 +1,9 @@
+../Core/Src/systick.c:22:17:GetSysTickTimer_ms	1
+../Core/Src/systick.c:27:6:clear_wait_ms	1
+../Core/Src/systick.c:31:6:reset_wait_ms	1
+../Core/Src/systick.c:35:6:set_wait_ms	1
+../Core/Src/systick.c:39:9:wait_ms	6
+../Core/Src/systick.c:64:6:clear_wait_ms_ch	1
+../Core/Src/systick.c:69:6:reset_wait_ms_ch	1
+../Core/Src/systick.c:74:6:set_wait_ms_ch	1
+../Core/Src/systick.c:79:9:wait_ms_ch	6
