@@ -1,3 +1,4 @@
+"./Core/FT5436/ft5436.o"
 "./Core/R16529/fonts.o"
 "./Core/R16529/r61529.o"
 "./Core/Src/main.o"
@@ -24,7 +25,5 @@
 "./Drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_hal_pwr_ex.o"
 "./Drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_hal_rcc.o"
 "./Drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_hal_rcc_ex.o"
-"./Drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_hal_sram.o"
 "./Drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_hal_tim.o"
 "./Drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_hal_tim_ex.o"
-"./Drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_ll_fmc.o"

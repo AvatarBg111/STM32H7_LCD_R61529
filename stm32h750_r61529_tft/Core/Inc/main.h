@@ -46,7 +46,6 @@ extern "C" {
 
 /* Exported macro ------------------------------------------------------------*/
 /* USER CODE BEGIN EM */
-extern SRAM_HandleTypeDef hsram1;
 
 /* USER CODE END EM */
 
@@ -60,6 +59,8 @@ void Error_Handler(void);
 /* USER CODE END EFP */
 
 /* Private defines -----------------------------------------------------------*/
+#define FT5436_RESET_Pin GPIO_PIN_7
+#define FT5436_RESET_GPIO_Port GPIOA
 #define R16529_RESET_Pin GPIO_PIN_13
 #define R16529_RESET_GPIO_Port GPIOB
 

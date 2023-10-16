@@ -1,5 +1,7 @@
 #include "stm32h7xx_hal.h"
-#include "r61529.h"
+#include "R61529.h"
+#include<stdio.h>
+#include<string.h>
 
 // static unsigned int const FONT16_INFO_1[] = {31,2};
 //extern const short belk[];
@@ -122,7 +124,7 @@ __inline void Lcd_Write_Data(uint16_t data){
 }
 
 //  =====================================================================
-void ili9481_SetAddrWindow(uint16_t x1,uint16_t y1,uint16_t x2,uint16_t y2){
+void R61529_SetAddrWindow(uint16_t x1,uint16_t y1,uint16_t x2,uint16_t y2){
 	Lcd_Write_Reg(0x2A);//Column Addres Set
 	Lcd_Write_Data(x1 >> 8);
 	Lcd_Write_Data(x1 & 0xFF);
@@ -138,7 +140,7 @@ void ili9481_SetAddrWindow(uint16_t x1,uint16_t y1,uint16_t x2,uint16_t y2){
 }
 
 //  =====================================================================
-void Init_Disp(){
+void Init_R61529(){
 	RD_IDLE;
 	RESET_IDLE;
 	HAL_Delay(100);
@@ -340,76 +342,39 @@ void Init_Disp(){
 	Lcd_Write_Data(0x01);
 	Lcd_Write_Data(0x3F);//480 - uses all lines in the frame buffer
 
-	//  Lcd_Write_Reg(0x2A); //set_column_address
-	//  Lcd_Write_Data(0x00); // starts from 0th frame buffer address
-	//  Lcd_Write_Data(0x00);
-	//  Lcd_Write_Data(0x01);
-	//  Lcd_Write_Data(0x3F);//320 - uses all columns
-
-	//  Lcd_Write_Reg(0x2B); //set_page_address
-	//  Lcd_Write_Data(0x00); // starts from 0th frame buffer address
-	//  Lcd_Write_Data(0x00);
-	//  Lcd_Write_Data(0x01);
-	//  Lcd_Write_Data(0xDF);//480 - uses all lines in the frame buffer
-
 	Lcd_Write_Reg(0x29); //set_display_on - This command causes the display module to start displaying the image data on the display device.
 	HAL_Delay(20);
 }
 
 //  =====================================================================
-//void ili9481_SetRotation(unsigned char r) // ??????????????????????????????????????????????????????????????????????????
-//{
-//        Lcd_Write_Reg(0x36);
-//        switch(r)
-//        {
-//                case 0:
-//                Lcd_Write_Data(0x28);    //
-//                X_SIZE = 480;
-//                Y_SIZE = 320;
-//                break;
-//                case 1:
-//                Lcd_Write_Data(0x2a);   //
-//                X_SIZE = 480;
-//                Y_SIZE = 320;
-//                break;
-//                case 2:
-//                Lcd_Write_Data(0x88);
-//                X_SIZE = 320;
-//                Y_SIZE = 480;
-//                break;
-//                case 3:
-//                Lcd_Write_Data(0x29);    //
-//                X_SIZE = 480;
-//                Y_SIZE = 320;
-//                break;
-//        }
-//}
-//  =====================================================================
-//void TFT_FillColor(const uint16_t color)
-//{
-//	ili9481_SetAddrWindow(0, 0, 480, 320);  //   0, 319, 479);
-//	for (int x = 0; x <= (long)X_SIZE; x++)  //
-//    {
-//       for (int y = 0; y <=(long) Y_SIZE; y++)  //
-//       {
-//         Lcd_Write_Data (color);
-//       }
-//    }
-//}
-//// =====================================================================
-//void TFT_FillRect(const uint16_t color)
-//{
-//	ili9481_SetAddrWindow(0, 0, 480, 320);  //   0, 319, 479);
-//	for (int x = 0; x <= 320; x++)
-//    {
-//       for (int y = 0; y <= 480; y++)
-//       {
-//         Lcd_Write_Data (color);
-//       }
-//    }
-//}
-// =====================================================================
-void ili9481_Flood(uint16_t color,uint32_t len){
+void R61529_SetRotation(unsigned char r){
+	Lcd_Write_Reg(0x36);
+
+	switch(r){
+		case ROTATE_DEFAULT:
+			Lcd_Write_Data(0x21);
+			X_SIZE = 480;
+			Y_SIZE = 320;
+			break;
+		case ROTATE_RIGHT:
+			Lcd_Write_Data(0x00);
+			X_SIZE = 320;
+			Y_SIZE = 480;
+			break;
+		case ROTATE_UPSIDE_DOWN:
+			Lcd_Write_Data(0x60);
+			X_SIZE = 480;
+			Y_SIZE = 320;
+			break;
+		case ROTATE_LEFT:
+			Lcd_Write_Data(0xC0);
+			X_SIZE = 320;
+			Y_SIZE = 480;
+			break;
+	}
+}
+
+void R61529_Flood(uint16_t color,uint32_t len){
 	uint16_t blocks;
 	uint8_t i;
 
@@ -440,32 +405,32 @@ void ili9481_Flood(uint16_t color,uint32_t len){
 	//HAL_SRAM_Write_16b(&hsram1, (uint32_t*)(LCD_DATA), color_arr, len & 63);
 }
 // =====================================================================
-void ili9481_FillScreen(uint16_t color)
+void R61529_FillScreen(uint16_t color)
 {
-        ili9481_SetAddrWindow(0,0,X_SIZE-1,Y_SIZE-1); //
-        ili9481_Flood(color,(long)X_SIZE*(long)Y_SIZE);
+        R61529_SetAddrWindow(0,0,X_SIZE-1,Y_SIZE-1); //
+        R61529_Flood(color,(long)X_SIZE*(long)Y_SIZE);
 }
 // =====================================================================
-void ili9481_FillRect(uint16_t color, uint16_t x1, uint16_t y1,
+void R61529_FillRect(uint16_t color, uint16_t x1, uint16_t y1,
 											uint16_t x2, uint16_t y2)
 {
 	if(x2==480) x2=479;
 	if(y2==320) y2=319;
-	ili9481_SetAddrWindow(x1,y1,x2,y2);
-	ili9481_Flood(color,(uint16_t)(x2-x1+1)*(uint16_t)(y2-y1+1));
+	R61529_SetAddrWindow(x1,y1,x2,y2);
+	R61529_Flood(color,(uint16_t)(x2-x1+1)*(uint16_t)(y2-y1+1));
 }
 // =====================================================================
-void ili9481_DrawPixel(int x, int y, uint16_t color)
+void R61529_DrawPixel(int x, int y, uint16_t color)
 {
 	if((x<0)||(y<0)||(x>=X_SIZE)||(y>=Y_SIZE)) return;
-	ili9481_SetAddrWindow(x,y,x,y);
+	R61529_SetAddrWindow(x,y,x,y);
 	Lcd_Write_Reg(0x2C);
 	Lcd_Write_Data(color);
 
 	//HAL_SRAM_Write_16b(&hsram1, (uint32_t*)(LCD_DATA), &color, 1);
 }
 // =====================================================================
-void ili9481_DrawLine(uint16_t color, uint16_t x1, uint16_t y1,
+void R61529_DrawLine(uint16_t color, uint16_t x1, uint16_t y1,
 											uint16_t x2, uint16_t y2)
 {
 	int steep = abs(y2-y1)>abs(x2-x1);
@@ -488,8 +453,8 @@ void ili9481_DrawLine(uint16_t color, uint16_t x1, uint16_t y1,
 	else ystep=-1;
 	for(;x1<=x2;x1++)
 	{
-		if(steep) ili9481_DrawPixel(y1,x1,color);
-		else ili9481_DrawPixel(x1,y1,color);
+		if(steep) R61529_DrawPixel(y1,x1,color);
+		else R61529_DrawPixel(x1,y1,color);
 		err-=dy;
 		if(err<0)
 		{
@@ -498,26 +463,28 @@ void ili9481_DrawLine(uint16_t color, uint16_t x1, uint16_t y1,
 		}
 	}
 }
+
 // =====================================================================
-void ili9481_DrawRect(uint16_t color, uint16_t x1, uint16_t y1,uint16_t x2, uint16_t y2)
+void R61529_DrawRect(uint16_t color, uint16_t x1, uint16_t y1,uint16_t x2, uint16_t y2)
 {
-	ili9481_DrawLine(color,x1,y1,x2,y1);
-	ili9481_DrawLine(color,x2,y1,x2,y2);
-	ili9481_DrawLine(color,x1,y1,x1,y2);
-	ili9481_DrawLine(color,x1,y2,x2,y2);
+	R61529_DrawLine(color,x1,y1,x2,y1);
+	R61529_DrawLine(color,x2,y1,x2,y2);
+	R61529_DrawLine(color,x1,y1,x1,y2);
+	R61529_DrawLine(color,x1,y2,x2,y2);
 }
+
 // =====================================================================
-void ili9481_DrawCircle(uint16_t x0, uint16_t y0, int r, uint16_t color)
+void R61529_DrawCircle(uint16_t x0, uint16_t y0, int r, uint16_t color)
 {
 	int f = 1-r;
 	int ddF_x=1;
 	int ddF_y=-2*r;
 	int x = 0;
 	int y = r;
-	ili9481_DrawPixel(x0,y0+r,color);
-	ili9481_DrawPixel(x0,y0-r,color);
-	ili9481_DrawPixel(x0+r,y0,color);
-	ili9481_DrawPixel(x0-r,y0,color);
+	R61529_DrawPixel(x0,y0+r,color);
+	R61529_DrawPixel(x0,y0-r,color);
+	R61529_DrawPixel(x0+r,y0,color);
+	R61529_DrawPixel(x0-r,y0,color);
 	while (x<y)
 	{
 		if (f>=0)
@@ -529,21 +496,21 @@ void ili9481_DrawCircle(uint16_t x0, uint16_t y0, int r, uint16_t color)
 		x++;
 		ddF_x+=2;
 		f+=ddF_x;
-		ili9481_DrawPixel(x0+x,y0+y,color);
-		ili9481_DrawPixel(x0-x,y0+y,color);
-		ili9481_DrawPixel(x0+x,y0-y,color);
-		ili9481_DrawPixel(x0-x,y0-y,color);
-		ili9481_DrawPixel(x0+y,y0+x,color);
-		ili9481_DrawPixel(x0-y,y0+x,color);
-		ili9481_DrawPixel(x0+y,y0-x,color);
-		ili9481_DrawPixel(x0-y,y0-x,color);
+		R61529_DrawPixel(x0+x,y0+y,color);
+		R61529_DrawPixel(x0-x,y0+y,color);
+		R61529_DrawPixel(x0+x,y0-y,color);
+		R61529_DrawPixel(x0-x,y0-y,color);
+		R61529_DrawPixel(x0+y,y0+x,color);
+		R61529_DrawPixel(x0-y,y0+x,color);
+		R61529_DrawPixel(x0+y,y0-x,color);
+		R61529_DrawPixel(x0-y,y0-x,color);
 	}
 }
 
-static void r61529_WriteChar(uint16_t x, uint16_t y, char ch, FontDef font, uint16_t color, uint16_t bgcolor){
+static void R61529_WriteChar(uint16_t x, uint16_t y, char ch, FontDef font, uint16_t color, uint16_t bgcolor){
     uint32_t i, b, j;
 
-    ili9481_SetAddrWindow(x, y, x+font.width-1, y+font.height-1);
+    R61529_SetAddrWindow(x, y, x+font.width-1, y+font.height-1);
 
     for(i = 0; i < font.height; i++){
         b = font.data[(ch - 32) * font.height + i];
@@ -557,7 +524,7 @@ static void r61529_WriteChar(uint16_t x, uint16_t y, char ch, FontDef font, uint
     }
 }
 
-void r61529_WriteString(uint16_t x, uint16_t y, const char* str, FontDef font, uint16_t color, uint16_t bgcolor){
+void R61529_WriteString(uint16_t x, uint16_t y, const char* str, FontDef font, uint16_t color, uint16_t bgcolor){
     while(*str){
         if(x + font.width >= X_SIZE){
             x = 0;
@@ -574,17 +541,35 @@ void r61529_WriteString(uint16_t x, uint16_t y, const char* str, FontDef font, u
             }
         }
 
-        r61529_WriteChar(x, y, *str, font, color, bgcolor);
+        R61529_WriteChar(x, y, *str, font, color, bgcolor);
         x += font.width;
         str++;
     }
 }
 
 void Draw_Image(const short *image_array, uint16_t x_coordinat, uint16_t y_coordinat, uint16_t img_width, uint16_t img_height, uint32_t s_img){
-	ili9481_SetAddrWindow(x_coordinat, y_coordinat, img_width + x_coordinat - 1, img_height + y_coordinat - 1);
+	R61529_SetAddrWindow(x_coordinat, y_coordinat, img_width + x_coordinat - 1, img_height + y_coordinat - 1);
 
 	for(uint32_t i = 0; i < s_img; i++){
 		Lcd_Write_Data(image_array[i]);
 	}
 }
+
+// =====================================================================
+void R61529_rotation_test(){
+	char text[20] = {0};
+	R61529_FillScreen(BLACK);
+
+	for(uint8_t i = 0; i < 4; i++){
+		sprintf(text, "Hello, World! Rt: %d", i + 1);
+		R61529_SetRotation(i);
+		R61529_WriteString(10, 10, text, Font_11x18, GREEN, BLACK);
+		HAL_Delay(750);
+		R61529_FillRect(BLACK, 10, 10, X_SIZE, 10 + 20);
+		memset(text, 0, 19);
+	}
+
+	R61529_SetRotation(ROTATE_DEFAULT);
+}
+
 
